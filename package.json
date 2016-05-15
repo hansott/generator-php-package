@@ -46,6 +46,7 @@
   "repository": "hansott/generator-php-package",
   "scripts": {
     "prepublish": "gulp prepublish",
+    "postinstall": "git submodule update --init --recursive",
     "test": "gulp"
   },
   "license": "MIT"
