@@ -9,7 +9,6 @@ var isEmailLike = require('is-email-like');
 
 module.exports = yeoman.Base.extend({
   prompting: function () {
-    // Have Yeoman greet the user.
     this.log(yosay(
       'Welcome to the fine ' + chalk.red('generator-php-package') + ' generator!'
     ));
@@ -81,7 +80,6 @@ module.exports = yeoman.Base.extend({
     ];
 
     return this.prompt(prompts).then(function (props) {
-      // To access props later use this.props.someAnswer;
       this.props = props;
     }.bind(this));
   },
