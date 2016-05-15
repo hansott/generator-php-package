@@ -1,5 +1,5 @@
 # generator-php-package [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
-> Generates a skeleton repository for your PHP package
+> Generates a skeleton repository for your PHP package with [thephpleague/skeleton](https://github.com/thephpleague/skeleton)
 
 ## Installation
 
