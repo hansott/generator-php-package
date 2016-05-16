@@ -24,7 +24,7 @@ describe('generator-php-package:app', function () {
     var expectedContents = [
       ['src/SkeletonClass.php', /namespace HansOtt\\Pipeline\\Skeleton;/],
       ['README.md', /composer require hansott\/pipeline/],
-      ['composer.json', /"HansOtt\\\\Pipeline": "src"/]
+      ['composer.json', /"HansOtt\\\\Pipeline\\\\": "src"/]
     ];
     assert.fileContent(expectedContents);
     done();

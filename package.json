@@ -1,6 +1,6 @@
 {
   "name": "generator-php-package",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Generates a skeleton repository for your PHP package",
   "homepage": "https://github.com/hansott/generator-php-package",
   "author": {
