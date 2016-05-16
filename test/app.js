@@ -22,8 +22,9 @@ describe('generator-php-package:app', function () {
 
   it('replaces the variables with user input', function () {
     var expectedContents = [
-      ['src/SkeletonClass.php', /namespace HansOtt\\Pipeline\\Skeleton;/],
+      ['src/SkeletonClass.php', /namespace HansOtt\\Pipeline;/],
       ['README.md', /composer require hansott\/pipeline/],
+      ['README.md', /new HansOtt\\Pipeline\\Skeleton\(\)/],
       ['composer.json', /"HansOtt\\\\Pipeline\\\\": "src"/]
     ];
     assert.fileContent(expectedContents);
