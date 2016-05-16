@@ -4,7 +4,8 @@ var assert = require('yeoman-assert');
 var helpers = require('yeoman-test');
 
 describe('generator-php-package:app', function () {
-  this.timeout(20000);
+  this.timeout(30000);
+
   before(function () {
     return helpers.run(path.join(__dirname, '../generators/app'))
       .withPrompts({
