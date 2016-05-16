@@ -43,7 +43,10 @@
       "mocha": true
     }
   },
-  "repository": "hansott/generator-php-package",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hansott/generator-php-package"
+  },
   "scripts": {
     "prepublish": "gulp prepublish",
     "test": "gulp"
