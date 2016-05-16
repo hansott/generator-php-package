@@ -1,12 +1,12 @@
 {
   "name": "generator-php-package",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Generates a skeleton repository for your PHP package",
   "homepage": "https://github.com/hansott/generator-php-package",
   "author": {
     "name": "Hans Ott",
     "email": "hansott@hotmail.be",
-    "url": "http://hansott.github.io/"
+    "url": "https://hansott.github.io/"
   },
   "files": [
     "generators"
@@ -17,8 +17,9 @@
   ],
   "dependencies": {
     "chalk": "^1.0.0",
-    "fullname": "^3.0.0",
+    "gulp-transform": "^1.0.6",
     "is-email-like": "^1.0.0",
+    "shelljs": "^0.7.0",
     "username": "^2.1.0",
     "yeoman-generator": "^0.23.0",
     "yosay": "^1.0.0"
