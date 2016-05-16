@@ -104,26 +104,32 @@ module.exports = yeoman.Base.extend({
   writing: function writing() {
     var transformations = [
       {
+        // The note in the README.md
         regexp: new RegExp('\\*\\*Note:.*\\n', 'g'),
         replacement: ''
       },
       {
+        // The repository url in composer.json
         regexp: new RegExp('https://github.com/:vendor/:package_name', 'g'),
         replacement: 'https://github.com/' + this.props.authorUsername + '/' + this.props.packageName
       },
       {
+        // The psr-4 entries in composer.json
         regexp: new RegExp(':vendor\\\\\\\\:package_name\\\\\\\\', 'g'),
         replacement: this.props.namespace + '\\\\' + ucfirst(this.props.packageName) + '\\\\'
       },
       {
+        // The namespace in SkeletonClass.php
         regexp: new RegExp('namespace League\\\\Skeleton', 'g'),
         replacement: 'namespace ' + this.props.namespace + '\\' + ucfirst(this.props.packageName)
       },
       {
+        // The object instantiation in README.md
         regexp: new RegExp('new League\\\\Skeleton()', 'g'),
         replacement: 'new ' + this.props.namespace + '\\' + ucfirst(this.props.packageName) + '\\Skeleton()'
       },
       {
+        // The test suite name in phpunit.xml.dist
         regexp: new RegExp(':vendor Test Suite', 'g'),
         replacement: ucfirst(this.props.packageName) + ' Test Suite'
       },
