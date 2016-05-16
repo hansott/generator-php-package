@@ -3,11 +3,11 @@ var fs = require('fs');
 var path = require('path');
 var chalk = require('chalk');
 var yosay = require('yosay');
+var shell = require('shelljs');
 var username = require('username');
 var yeoman = require('yeoman-generator');
 var transform = require('gulp-transform');
 var isEmailLike = require('is-email-like');
-var shell = require('shelljs');
 
 var skeleton = {
   commitHash: '37f9078c76b785205786c2ebb976a077787c98c8',
