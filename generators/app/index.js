@@ -9,11 +9,23 @@ var transform = require('gulp-transform');
 var isEmailLike = require('is-email-like');
 var shell = require('shelljs');
 
-var skeletonVersion = '37f9078c76b785205786c2ebb976a077787c98c8';
-var skeletonShortVersion = skeletonVersion.slice(0, 7);
-var skeletonOrganisation = 'thephpleague';
-var skeletonRepository = 'skeleton';
-var skeletonTarballUri = 'https://github.com/' + skeletonOrganisation + '/' + skeletonRepository + '/tarball/' + skeletonVersion;
+var skeleton = {
+  commitHash: '37f9078c76b785205786c2ebb976a077787c98c8',
+  organisation: 'thephpleague',
+  repository: 'skeleton',
+
+  getShortCommitHash: function getShortCommitHash() {
+    return this.commitHash.slice(0, 7);
+  },
+
+  getTarballUri: function getTarballUri() {
+    return 'https://github.com/' + this.organisation + '/' + this.repository + '/tarball/' + this.getShortCommitHash();
+  },
+
+  getTarballFileName: function getTarballFileName() {
+    return this.organisation + '-' + this.repository + '-' + this.getShortCommitHash();
+  }
+};
 
 var ucfirst = function ucfirst(str) {
   str += String('');
@@ -169,9 +181,8 @@ module.exports = yeoman.Base.extend({
     };
 
     this.registerTransformStream(transform(swapVariables, {encoding: 'utf-8'}));
-    this.extract(skeletonTarballUri, '.', {}, function () {
-      var extractedDirectory = skeletonOrganisation + '-' + skeletonRepository + '-' + skeletonShortVersion;
-      this.directory(this.destinationPath(extractedDirectory), this.destinationRoot(), function () {});
+    this.extract(skeleton.getTarballUri(), '.', {}, function () {
+      this.directory(this.destinationPath(skeleton.getTarballFileName()), this.destinationRoot(), function () {});
       done();
     }.bind(this));
 
