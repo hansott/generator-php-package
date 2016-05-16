@@ -119,7 +119,7 @@ module.exports = yeoman.Base.extend({
       },
       {
         regexp: new RegExp(':vendor\\\\\\\\:package_name\\\\\\\\', 'g'),
-        replacement: this.props.namespace + '\\\\' + ucfirst(this.props.packageName)
+        replacement: this.props.namespace + '\\\\' + ucfirst(this.props.packageName) + '\\\\'
       },
       {
         regexp: new RegExp('League\\\\Skeleton;', 'g'),
