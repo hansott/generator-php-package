@@ -32,8 +32,4 @@ describe('generator-php-package:app', function () {
   it('initializes git', function () {
     assert.file('.git');
   });
-
-  it('initializes composer', function () {
-    assert.file('vendor/autoload.php');
-  });
 });
