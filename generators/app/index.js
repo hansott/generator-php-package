@@ -1,5 +1,6 @@
 'use strict';
 var fs = require('fs');
+var glob = require('glob');
 var path = require('path');
 var chalk = require('chalk');
 var yosay = require('yosay');
@@ -8,24 +9,6 @@ var username = require('username');
 var yeoman = require('yeoman-generator');
 var transform = require('gulp-transform');
 var isEmailLike = require('is-email-like');
-
-var skeleton = {
-  commitHash: '37f9078c76b785205786c2ebb976a077787c98c8',
-  organisation: 'thephpleague',
-  repository: 'skeleton',
-
-  getShortCommitHash: function getShortCommitHash() {
-    return this.commitHash.slice(0, 7);
-  },
-
-  getTarballUri: function getTarballUri() {
-    return 'https://github.com/' + this.organisation + '/' + this.repository + '/tarball/' + this.getShortCommitHash();
-  },
-
-  getTarballFileName: function getTarballFileName() {
-    return this.organisation + '-' + this.repository + '-' + this.getShortCommitHash();
-  }
-};
 
 var ucfirst = function ucfirst(str) {
   str += String('');
@@ -119,8 +102,6 @@ module.exports = yeoman.Base.extend({
   },
 
   writing: function writing() {
-    var done = this.async();
-
     var transformations = [
       {
         regexp: new RegExp('\\*\\*Note:.*\\n', 'g'),
@@ -180,13 +161,13 @@ module.exports = yeoman.Base.extend({
       return contents;
     };
 
-    this.registerTransformStream(transform(swapVariables, {encoding: 'utf-8'}));
-    this.extract(skeleton.getTarballUri(), '.', {}, function () {
-      this.directory(this.destinationPath(skeleton.getTarballFileName()), this.destinationRoot(), function () {});
-      done();
-    }.bind(this));
-
-    return done;
+    this.registerTransformStream(transform(swapVariables, {encoding: 'utf8'}));
+    var files = glob.sync('**', {dot: true, nodir: true, cwd: this.sourceRoot()});
+    for (var i = 0; i < files.length; i++) {
+      var destinationPath = path.join(this.destinationRoot(), files[i]);
+      var sourcePath = path.join(this.sourceRoot(), files[i]);
+      this.copy(sourcePath, destinationPath);
+    }
   },
 
   install: function install() {
