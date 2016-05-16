@@ -20,13 +20,20 @@ describe('generator-php-package:app', function () {
       .toPromise();
   });
 
-  it('creates files', function (done) {
+  it('replaces the variables with user input', function () {
     var expectedContents = [
       ['src/SkeletonClass.php', /namespace HansOtt\\Pipeline\\Skeleton;/],
       ['README.md', /composer require hansott\/pipeline/],
       ['composer.json', /"HansOtt\\\\Pipeline\\\\": "src"/]
     ];
     assert.fileContent(expectedContents);
-    done();
+  });
+
+  it('initializes git', function () {
+    assert.file('.git');
+  });
+
+  it('initializes composer', function () {
+    assert.file('vendor/autoload.php');
   });
 });

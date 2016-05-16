@@ -1,4 +1,5 @@
 'use strict';
+var fs = require('fs');
 var path = require('path');
 var chalk = require('chalk');
 var yosay = require('yosay');
@@ -184,6 +185,18 @@ module.exports = yeoman.Base.extend({
       this.spawnCommandSync(composerPath, ['install']);
     } else {
       this.log.error('Composer not found. Please run `composer install` manually.');
+    }
+
+    var gitPath = shell.which('git');
+    if (gitPath) {
+      if (fs.existsSync('.git')) {
+        this.log('Git is already initialized.');
+      } else {
+        this.log('Initializing git...');
+        this.spawnCommandSync(gitPath, ['init']);
+      }
+    } else {
+      this.log.error('Git not found. Please run `git init` manually.');
     }
   }
 });
