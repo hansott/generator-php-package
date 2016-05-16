@@ -1,5 +1,6 @@
 'use strict';
 var fs = require('fs');
+var glob = require('glob');
 var path = require('path');
 var chalk = require('chalk');
 var yosay = require('yosay');
@@ -8,24 +9,6 @@ var username = require('username');
 var yeoman = require('yeoman-generator');
 var transform = require('gulp-transform');
 var isEmailLike = require('is-email-like');
-
-var skeleton = {
-  commitHash: '37f9078c76b785205786c2ebb976a077787c98c8',
-  organisation: 'thephpleague',
-  repository: 'skeleton',
-
-  getShortCommitHash: function getShortCommitHash() {
-    return this.commitHash.slice(0, 7);
-  },
-
-  getTarballUri: function getTarballUri() {
-    return 'https://github.com/' + this.organisation + '/' + this.repository + '/tarball/' + this.getShortCommitHash();
-  },
-
-  getTarballFileName: function getTarballFileName() {
-    return this.organisation + '-' + this.repository + '-' + this.getShortCommitHash();
-  }
-};
 
 var ucfirst = function ucfirst(str) {
   str += String('');
@@ -119,26 +102,34 @@ module.exports = yeoman.Base.extend({
   },
 
   writing: function writing() {
-    var done = this.async();
-
     var transformations = [
       {
+        // The note in the README.md
         regexp: new RegExp('\\*\\*Note:.*\\n', 'g'),
         replacement: ''
       },
       {
+        // The repository url in composer.json
         regexp: new RegExp('https://github.com/:vendor/:package_name', 'g'),
         replacement: 'https://github.com/' + this.props.authorUsername + '/' + this.props.packageName
       },
       {
+        // The psr-4 entries in composer.json
         regexp: new RegExp(':vendor\\\\\\\\:package_name\\\\\\\\', 'g'),
         replacement: this.props.namespace + '\\\\' + ucfirst(this.props.packageName) + '\\\\'
       },
       {
-        regexp: new RegExp('League\\\\Skeleton;', 'g'),
-        replacement: this.props.namespace + '\\' + ucfirst(this.props.packageName) + '\\Skeleton;'
+        // The namespace in SkeletonClass.php
+        regexp: new RegExp('namespace League\\\\Skeleton', 'g'),
+        replacement: 'namespace ' + this.props.namespace + '\\' + ucfirst(this.props.packageName)
       },
       {
+        // The object instantiation in README.md
+        regexp: new RegExp('new League\\\\Skeleton()', 'g'),
+        replacement: 'new ' + this.props.namespace + '\\' + ucfirst(this.props.packageName) + '\\Skeleton()'
+      },
+      {
+        // The test suite name in phpunit.xml.dist
         regexp: new RegExp(':vendor Test Suite', 'g'),
         replacement: ucfirst(this.props.packageName) + ' Test Suite'
       },
@@ -180,13 +171,17 @@ module.exports = yeoman.Base.extend({
       return contents;
     };
 
-    this.registerTransformStream(transform(swapVariables, {encoding: 'utf-8'}));
-    this.extract(skeleton.getTarballUri(), '.', {}, function () {
-      this.directory(this.destinationPath(skeleton.getTarballFileName()), this.destinationRoot(), function () {});
-      done();
-    }.bind(this));
-
-    return done;
+    this.registerTransformStream(transform(swapVariables, {encoding: 'utf8'}));
+    var files = glob.sync('**', {dot: true, nodir: true, cwd: this.sourceRoot()});
+    var ignores = ['.git'];
+    for (var i = 0; i < files.length; i++) {
+      if (ignores.indexOf(files[i]) !== -1) {
+        continue;
+      }
+      var destinationPath = path.join(this.destinationRoot(), files[i]);
+      var sourcePath = path.join(this.sourceRoot(), files[i]);
+      this.copy(sourcePath, destinationPath);
+    }
   },
 
   install: function install() {
