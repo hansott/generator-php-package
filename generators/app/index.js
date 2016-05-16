@@ -48,7 +48,7 @@ module.exports = yeoman.Base.extend({
     };
 
     var url = function url(input) {
-      return /^(https):\/\/[^\s/$.?#].[^\s]*$/i.test(input);
+      return /^(https?):\/\/[^\s/$.?#].[^\s]*$/i.test(input);
     };
 
     var prompts = [
