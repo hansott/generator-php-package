@@ -40,7 +40,7 @@ module.exports = yeoman.Base.extend({
     ));
 
     var required = function required(input) {
-      return input;
+      return typeof input === 'string' && 0 < input.length;
     };
 
     var email = function email(input) {
