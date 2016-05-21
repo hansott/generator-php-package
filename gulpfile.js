@@ -11,7 +11,11 @@ var plumber = require('gulp-plumber');
 gulp.task('static', function () {
   return gulp.src('**/*.js')
     .pipe(excludeGitignore())
-    .pipe(eslint())
+    .pipe(eslint({
+      rules: {
+        'no-useless-escape': 0
+      }
+    }))
     .pipe(eslint.format())
     .pipe(eslint.failAfterError());
 });

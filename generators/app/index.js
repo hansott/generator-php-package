@@ -125,7 +125,7 @@ module.exports = yeoman.Base.extend({
       },
       {
         // The object instantiation in README.md
-        regexp: new RegExp('new League\\\\Skeleton()', 'g'),
+        regexp: new RegExp('new League\\\\Skeleton\(\)', 'g'),
         replacement: 'new ' + this.props.namespace + '\\' + ucfirst(this.props.packageName) + '\\Skeleton()'
       },
       {
