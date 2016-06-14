@@ -173,9 +173,8 @@ module.exports = yeoman.Base.extend({
 
     this.registerTransformStream(transform(swapVariables, {encoding: 'utf8'}));
     var files = glob.sync('**', {dot: true, nodir: true, cwd: this.sourceRoot()});
-    var ignores = ['.git'];
     for (var i = 0; i < files.length; i++) {
-      if (ignores.indexOf(files[i]) !== -1) {
+      if (files[i] === '.git') {
         continue;
       }
       var destinationPath = path.join(this.destinationRoot(), files[i]);
